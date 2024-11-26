@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { LiveKitRoom, useRoom } from 'livekit-react';
-import {mockSession} from "next-auth/client/__tests__/helpers/mocks";
 import {supabase} from "../../lib/supabaseClient";
 
 const LiveKitVideo = () => {
@@ -11,9 +10,6 @@ const LiveKitVideo = () => {
   const [error, setError] = useState<string | null>(null);
   const [roomUrl, setRoomUrl] = useState<string>('');
   const [token, setToken] = useState<string>('');
-
-  // Hook for room state and error handling
-  const { room, error: roomError } = useRoom();
 
   useEffect(() => {
     const joinRoom = async () => {
@@ -24,7 +20,6 @@ const LiveKitVideo = () => {
           return;
         }
 
-        // Fetch room URL and token from the backend
         const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}rooms/join?userId=${user.id}`, { method: 'GET' });
         const data = await response.json();
 
@@ -33,7 +28,7 @@ const LiveKitVideo = () => {
           return;
         }
 
-        const { roomUrl, token } = data; // Fetch room URL and token from response
+        const { roomUrl, token } = data;
         setRoomUrl(roomUrl);
         setToken(token);
       } catch (error) {
@@ -44,10 +39,6 @@ const LiveKitVideo = () => {
 
     joinRoom();
   }, []);
-
-  if (roomError) {
-    setError(`Error connecting to the room: ${roomError.message}`);
-  }
 
   if (error) {
     return <div>{error}</div>;
