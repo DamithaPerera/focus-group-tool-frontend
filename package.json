@@ -13,6 +13,7 @@
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.46.1",
     "axios": "^1.7.7",
+    "livekit-client": "^2.6.3",
     "livekit-server-sdk": "^2.8.1",
     "next": "15.0.3",
     "next-auth": "^4.24.10",
