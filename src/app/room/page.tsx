@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabaseClient'; // Assuming you have supabaseClient configured
+import { supabase } from '@/lib/supabaseClient';
+import LiveKitVideo from './LiveKitVideo';
+import { User } from '@supabase/supabase-js';  // Import the type for User
 
 export default function Room() {
     const router = useRouter();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState<User | null>(null);  // Declare the user state type correctly
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -15,7 +17,7 @@ export default function Room() {
                 // If no user is authenticated, redirect to the login page
                 router.push('/login');
             } else {
-                setUser(user);
+                setUser(user);  // Correctly set the user state
             }
         };
 
@@ -37,6 +39,9 @@ export default function Room() {
             <h1>Welcome to the Room</h1>
             <p>You are logged in as {user.email}</p>
             <button onClick={handleLeaveRoom}>Leave Room</button>
+
+            {/* Display LiveKit video component */}
+            <LiveKitVideo />
         </div>
     );
 }
